@@ -18,8 +18,16 @@ This is where the magic happens! TextID doesn't just look at words; it analyzes 
 3.  **The Identity Reveal**: By comparing the input signal against our calibrated biometric database, TextID pulls out the true author with surgical accuracy. **The math doesn't lie!** 🧬
 
 ## 📂 Quick Start
+- feed your documents (at `data` folder)
+
 ```bash
+# then execute the guss program (hope you gona get it corrcet 😂)
 python guess.py "your target text"
 ```
+
+
+## challenges
+* You can manually collect some users' text and documents (save them in the format at [documents_data_folder](/data/)).
+* Another quick option is to generate some challenges using [challenges](/examples/).
 
 *Place samples in `data/{author}/` to begin calibration.*
