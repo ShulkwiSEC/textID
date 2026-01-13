@@ -1,0 +1,10 @@
+output.txt
+data/
+*.log
+temp-*
+_.DS_Store
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+.env
