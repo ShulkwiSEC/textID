@@ -29,5 +29,5 @@ python guess.py "your target text"
 ## challenges
 * You can manually collect some users' text and documents (save them in the format at [documents_data_folder](/data/)).
 * Another quick option is to generate some challenges using [challenges](/examples/).
-
+* note: you need to make sure to use the `challange||examples` at the root dir of the project 
 *Place samples in `data/{author}/` to begin calibration.*

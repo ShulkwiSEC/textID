@@ -11,20 +11,28 @@ class StylometryEngine:
     
     # Top 100+ most stable stylometric markers (English + Arabic)
     MARKERS = [
-        # --- English ---
+        # --- English (Expanded) ---
         "the", "and", "to", "of", "a", "in", "that", "is", "it", "was", "as", "for", "with", "be", "by", "at", 
         "on", "he", "she", "but", "his", "her", "not", "which", "you", "all", "this", "from", "they", "had", 
         "are", "we", "my", "me", "if", "an", "who", "when", "there", "so", "up", "out", "no", "what", "more", 
         "into", "their", "has", "very", "one", "him", "could", "been", "would", "shall", "should", "will", 
+        "only", "do", "can", "than", "then", "its", "our", "were", "them", "some", "these", "your", "his",
+        "about", "how", "over", "after", "most", "may", "often", "always", "never", "sometimes", "because",
 
         # --- Arabic (Function Words & Pronouns) ---
-        "من", "في", "على", "إلى", "عن", "مع", "هذا", "هذه", "الذي", "التي",  # Prepositions/Articles
-        "أن", "إن", "لا", "ما", "لم", "لن", "قد", "كان", "كانت", "كل",      # Particles
-        "هو", "هي", "هم", "نحن", "أنا", "بعد", "قبل", "عند", "حتى", "إذا",   # Pronouns/Time
+        "من", "في", "على", "إلى", "عن", "مع", "هذا", "هذه", "الذي", "التي", 
+        "أن", "إن", "لا", "ما", "لم", "لن", "قد", "كان", "كانت", "كل",      
+        "هو", "هي", "هم", "نحن", "أنا", "بعد", "قبل", "عند", "حتى", "إذا",   
         
-        # --- Punctuation (Universal & Arabic Specific) ---
+        # --- Punctuation ---
         ".", ",", ";", ":", "!", "?", "-", "(", ")", "\"", 
-        "،", "؛", "؟", "«", "»"  # Arabic comma, semicolon, question mark, and quotes
+        "،", "؛", "؟", "«", "»",
+
+        # --- AI Style Markers ---
+        "however", "therefore", "additionally", "moreover", "furthermore", "consequently",
+        "overall", "summary", "conclusion", "instance", "example", "notably", "significant",
+        "provides", "ensures", "crucial", "essential", "actually", "basically", "literally",
+        "delve", "tapestry", "embark", "comprehensive", "versatile", "transform", "pivotal"
     ]
 
     def __init__(self, data_dir="data"):
@@ -33,7 +41,9 @@ class StylometryEngine:
             for author in sorted(os.listdir(data_dir)):
                 path = os.path.join(data_dir, author)
                 if os.path.isdir(path):
-                    self.registry[author] = self._signature(self._load(path))
+                    sig = self._signature(self._load(path))
+                    if sig:
+                        self.registry[author] = sig
 
     def _load(self, path):
         content = []
@@ -46,7 +56,7 @@ class StylometryEngine:
         if not text.strip(): return None
         
         # 1. Forensic Word Vector
-        tokens = re.findall(r'\b\w+\b|[.,;:\-!?"]', text)
+        tokens = re.findall(r'\b\w+\b|[.,;:\-!?()\"،؛؟«»]', text)
         counts = collections.Counter(tokens)
         total = len(tokens) or 1
         return [counts.get(m, 0) / total for m in self.MARKERS]
