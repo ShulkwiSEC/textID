@@ -1,3 +1,5 @@
+# challange wallkthrough: https://shulkwisec.github.io/post/how-shulkwisec-build-an-engine-to-detect-ai-authorship-physics/
+
 from engine import StylometryEngine
 import time
 
